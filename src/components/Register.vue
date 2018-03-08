@@ -4,15 +4,15 @@
             <div class="column is-4 is-offset-4">
                 <h2 class="title has-text-centered">Register</h2>
 
-                <form method="POST" @submit.prevent="signup">
+                <form method="POST" @submit.prevent="register">
                     <div class="field">
-                        <label class="label">Username</label>
+                        <label class="label">Fullname</label>
 
                         <p class="control">
                             <input
                                 type="text"
                                 class="input"
-                                v-model="username">
+                                v-model="fullname">
                         </p>
                     </div>
 
@@ -48,19 +48,32 @@
 </template>
 
 <script>
+import { REGISTER_MUTATION } from "@/graphql";
 export default {
   name: "Register",
   data() {
     return {
-      username: "",
+      fullname: "",
       email: "",
       password: ""
     };
   },
   methods: {
-    signup() {
-
+    register() {
+      this.$apollo
+        .mutate({
+          mutation: REGISTER_MUTATION,
+          variables: {
+            fullname: this.fullname,
+            email: this.email,
+            password: this.password
+          }
+        })
+        .then(response => {
+          // redirect to login page
+          this.$router.replace("/login");
+        });
+    }
   }
-}
 };
 </script>
