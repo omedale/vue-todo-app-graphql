@@ -34,8 +34,27 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  methods: {}
+    data () {
+      return {
+
+      }
+    },
+   computed: {
+     ...mapState([
+      'isUserLoggedIn',
+      'user'
+    ])
+  },
+  methods: {
+    init(){
+
+    }
+  },
+  mounted(){
+    this.init()
+  }
 };
 </script>
 

@@ -23,18 +23,24 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
-          <p class="control">
+          <p
+            v-if="!isUserLoggedIn"
+           class="control">
               <router-link class="button is-link" :to="{name: 'register'}">
                <span>Register</span>
                </router-link>
           </p>
-          <p class="control">
+          <p
+            v-if="!isUserLoggedIn"
+            class="control">
             <router-link class="button is-link" :to="{name: 'login'}">
                <span>Login</span>
                </router-link>
           </p>
-          <p class="control">
-            <a class="button is-link" href="#">
+          <p
+            v-if="isUserLoggedIn"
+            class="control">
+            <a @click="logout" class="button is-link" href="#">
               <span>Log Out</span>
             </a>
           </p>
@@ -46,9 +52,21 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
+  computed: {
+     ...mapState([
+      'isUserLoggedIn',
+    ])
+  },
   methods: {
-
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        name: 'home'
+      })
+    }
   }
 }
 </script>
