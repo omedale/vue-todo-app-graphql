@@ -20,7 +20,7 @@ export const REGISTER_MUTATION = gql`
 `
 
 export const SIGNIN_MUTATION = gql`
-    mutation LoginMutation($email: String!, $password: String!) {
+    mutation SigninMutation($email: String!, $password: String!) {
       signinUser (
         email: {
          email: $email,
@@ -35,5 +35,28 @@ export const SIGNIN_MUTATION = gql`
            email
          }
        }
+    }
+`
+export const ALL_TODOS_QUERY = gql`
+    query AllTodoQuery($user_id: ID!)  {
+      userTodos(user_id: $user_id) {
+          id
+          name
+          desc
+        }
+    }
+`
+
+export const ADD_TODO_MUTATION = gql`
+    mutation AddPostMutation($name: String!, $content: String!, $user_id: ID!) {
+      createTodo(
+        desc: $content
+        name: $name,
+        user_id: $user_id
+      ) {
+        id
+        desc
+        name
+      }
     }
 `
